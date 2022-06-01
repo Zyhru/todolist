@@ -4,7 +4,7 @@
 
 The main purpose of this project is to get familiar with Spring Boot and enhance my skills on the backend and frontend.
 
-# Planning
+## Planning
 
 ## To Do List
 + Add a task 
