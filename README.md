@@ -1,6 +1,8 @@
 # todolist
 
-## The purpose of this 
+## Purpose
+
+The main purpose of this project is to get familiar with Spring Boot and enhance my skills on the backend and frontend.
 
 # Planning
 
