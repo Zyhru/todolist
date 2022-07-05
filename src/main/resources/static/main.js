@@ -1,5 +1,5 @@
 
-
+let x;
 // opening modal and setting previous information inside inputs
 $(document).ready(function() {
 
@@ -13,11 +13,39 @@ $(document).ready(function() {
            $('.myForm #description').val(task.description);
         });
 
-        $('#editModal').modal('show');
+        $('#editModal').modal();
 
         console.log("Clicked on modal");
 
     });
+
+
+
+    x = 0;
+    // when user clicks on the 'Finished Button'
+    $('.table .btn-success').on('click',function(event) {
+        event.preventDefault();
+        const status = document.getElementById("statusId");
+
+        if(x === 0) {
+            status.innerText = "Complete";
+            x = 1;
+        } else {
+            status.innerText = "In progress";
+            x = 0;
+        }
+
+
+        console.log(x);
+
+    });
+
+
+
+
+
+
+
 
 
 

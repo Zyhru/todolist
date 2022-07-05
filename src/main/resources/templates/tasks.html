@@ -3,21 +3,6 @@
 <head>
 
 
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-<!--    <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>-->
-<!--    -->
-
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-<!--    <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>-->
-
-<!--    <link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"/>-->
-<!--    <script type="text/javascript" src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>-->
-<!--    <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>-->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -48,6 +33,9 @@
 </div>
 
 
+
+
+
 <table class="table table-stripped">
     <thead>
     <tr>
@@ -59,17 +47,17 @@
     </tr>
     </thead>
 
+
     <tr th:each="task:${tasks}">
         <td th:text="${task.Id}">Id</td>
         <td th:text="${task.description}">Description</td>
-        <td th:text="${task.status}">Status</td>
+        <td id="statusId" th:text="${task.status}">Status</td>
         <td th:text="${task.timeCreated}">Date Created</td>
         <td> <a th:href="@{/tasks/getOne/(id=${task.Id})}" class="btn btn-warning">Edit</a></td>
         <td> <a th:href="@{/tasks/deleteTask/(id=${task.Id})}" class="btn btn-danger">Delete</a></td>
-<!--        <td><a th:href="@{/tasks/complete/{id}(id=${task.Id})}" class="btn btn-success">Finished</a></td>-->
-        <td><a th:href="@{/tasks/complete/{id}(id=${task.Id})}" class="btn btn-success">Finished</a>
+        <td> <a th:href="@{/tasks/getOne/(id=${task.Id})}" class="btn btn-success">Finished</a></td>
 
-        </td>
+
 
     </tr>
 
@@ -79,7 +67,9 @@
 
 
 
-</form>
+
+
+
 
 <div class="myForm">
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -95,19 +85,20 @@
 
             <div class="modal-body">
                 <div class="form-group">
+                    <label for="description" class="col-form-label">Update Task</label>
+                    <input type="text" class="form-control" id="description" name="description" value=""/>
+                </div>
+                <div class="form-group">
                     <label class="col-form-label" for="id"></label>
                     <input class="form-control" id="id" name="id" type="hidden" value=""/>
                 </div>
-                    <div class="form-group">
-                        <label for="description" class="col-form-label">Update Task</label>
-                        <input type="text" class="form-control" id="description" name="description" value=""/>
-                    </div>
+
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 <!--                <button type="submit" class="btn btn-primary">Save</button>-->
-                <input class="btn btn-primary" type="submit" value="save"/>
+                <input class="btn btn-primary" type="submit" value="Save"/>
 
             </div>
         </div>

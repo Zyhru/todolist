@@ -71,46 +71,13 @@ public class TaskController {
     @PostMapping("/update")
     public String update(Task task) {
 
-
         taskService.update(task);
         return redirectTaskPage;
 
-
     }
 
 
 
-
-    @GetMapping(value="/complete/{id}")
-    public String completeTask(@PathVariable("id")Integer id) {
-
-
-        // get the id of the task that is being chosen as completed
-        // then set the status to "completed"
-        // set the status of the id to "completed"
-
-        // 1. Retrieve the id
-        // 2. Set status to complete
-        // 3. Redirect to the homepage
-
-        Task task = new Task();
-        task.setStatus("Complete");
-        taskService.updateStatus(task);
-
-
-        return redirectTaskPage;
-
-
-    }
-
-//    @PostMapping("/complete")
-//    public String complete(Task task) {
-//
-//        task.setStatus("Complete");
-//        taskService.update(task);
-//        return redirectTaskPage;
-//
-//    }
 
 
 
