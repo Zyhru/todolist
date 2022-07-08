@@ -4,13 +4,13 @@ package com.example.todolist.controllers;
 import com.example.todolist.models.Task;
 import com.example.todolist.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,19 +24,26 @@ public class TaskController {
 
 
 
-    /*
-    Adds a task to taskdb
-    then redirects to localhost:8080/tasks/getAll
-     */
+
+    // adds a task to our database by performing a POST request, then it redirects us to all of our tasks (localhost:8080/tasks/getAll
     @PostMapping("/addTask")
-    public String createTask(@ModelAttribute("task") Task task) {
-        Task t = new Task(task.getDescription());
-        taskService.createTask(t);
+    public String createTask(@ModelAttribute("task") @Valid Task task, BindingResult result, Model model) {
+
+        // if task is empty, prompt error message to the user
+        if(result.hasErrors()) {
+            model.addAttribute("task",task);
+            System.out.println("Description size is less than 2!");
+            return redirectTaskPage;
+        } else {
+            System.out.println("Adding task: " + task.toString());
+            taskService.createTask(task);
+        }
+
         return redirectTaskPage;
     }
 
 
-    // returns tasks.html
+    // returns localhost:8080/tasks/getAll
     @GetMapping("/getAll")
     public String getAllTask(Model model) {
         List<Task> tasks = taskService.getAllTask();
@@ -59,6 +66,8 @@ public class TaskController {
         return taskService.getTaskById(id);
     }
 
+
+    // Deleting a task
     @GetMapping("/deleteTask")
     public String deleteTask(Integer id) {
 
@@ -67,7 +76,7 @@ public class TaskController {
         return redirectTaskPage;
     }
 
-
+    // /update endpoint performs a POST to update a task
     @PostMapping("/update")
     public String update(Task task) {
 
@@ -75,6 +84,34 @@ public class TaskController {
         return redirectTaskPage;
 
     }
+
+
+    /*
+        Grabbing the id of a row
+        Checking to see if the status is equal to "In Progress"
+        If so then change the status to "Complete" and vice-versa
+     */
+    @PostMapping("/status/{id}")
+    public String updateStatus(@PathVariable("id") Integer id, Model model) {
+
+        Task task = taskService.getTaskById(id).orElseThrow();
+
+        if("In progress".equals(task.getStatus())) {
+            task.setStatus("Complete");
+        } else {
+            task.setStatus("In progress");
+        }
+
+        taskService.update(task);
+
+
+        return redirectTaskPage;
+
+    }
+
+
+
+
 
 
 
