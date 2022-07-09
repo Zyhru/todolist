@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE  html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 
 
 
+
+    <link rel="stylesheet" th:href="@{/styles.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>
-
 
 
     <meta charset="UTF-8">
@@ -17,20 +20,41 @@
 <body>
 
 
-<h1 class="text-center">To Do List</h1>
 
 
+    <button id=lightMode type="button" class="btn btn-danger">
+        <i class="bi bi-moon text-dark"></i>
+    </button>
 
+
+    <h2 class="text-center" >To Do List</h2>
+<!--<div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-sm-10 col-12">-->
+<!--             -->
+<!--                -->
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--</div>-->
+<br>
 <!--Add button-->
 
-<div class="d-flex flex-row align-items-center">
-<form action="#" th:action="@{/tasks/addTask}" th:object="${task}" method="post">
-    <div class="input-group mb-3">
-        <input type="text" th:field="*{description}" class="form-control" id="inputTaskName" placeholder="Enter a task" autofocus/>
-        <button class="btn btn-primary" type="submit" id="addButton">Add Task</button>
+<!--<div>-->
+<!--    <label for="email">Email</label> <input type="text" th:field="*{email}" />-->
+<!--    <p th:if="${#fields.hasErrors('email')}" th:error class="error" th:errors="*{email}" />-->
+<!--</div>-->
+
+    <div class="form-group text-center">
+        <form  id="#addTask"  novalidate="novalidate" th:action="@{/tasks/addTask}" th:object="${task}" method="post" >
+            <div class="form-group text-center">
+                <input type="text" th:field="*{description}" class="form-control" id="taskDesc" placeholder="Enter a task">
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+            </div>
+            <input  type="submit" class="btn btn-primary" id="addBtn" value="Add task">
+        </form>
     </div>
-</form>
-</div>
 
 
 
@@ -53,10 +77,21 @@
         <td th:text="${task.description}">Description</td>
         <td id="statusId" th:text="${task.status}">Status</td>
         <td th:text="${task.timeCreated}">Date Created</td>
-        <td> <a th:href="@{/tasks/getOne/(id=${task.Id})}" class="btn btn-warning">Edit</a></td>
-        <td> <a th:href="@{/tasks/deleteTask/(id=${task.Id})}" class="btn btn-danger">Delete</a></td>
-        <td> <a th:href="@{/tasks/getOne/(id=${task.Id})}" class="btn btn-success">Finished</a></td>
+        <td><a th:href="@{/tasks/getOne/(id=${task.Id})}" class="btn btn-warning">Edit</a></td>
+        <td><a th:href="@{/tasks/deleteTask/(id=${task.Id})}" class="btn btn-danger">Delete</a></td>
 
+
+        <td>
+
+            <form action="#" th:action="@{/tasks/status/{id}(id=${task.Id})}"
+                  method="post">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Update</button>
+                </div>
+            </form>
+
+
+        </td>
 
 
     </tr>
@@ -64,51 +99,42 @@
 </table>
 
 
-
-
-
-
-
-
-
 <div class="myForm">
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="#" method="post" th:action="@{/tasks/update}" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="taskLabel">Edit task</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form action="#" method="post" th:action="@{/tasks/update}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskLabel">Edit task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="description" class="col-form-label">Update Task</label>
-                    <input type="text" class="form-control" id="description" name="description" value=""/>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="description" class="col-form-label">Update Task</label>
+                            <input type="text" class="form-control" id="description" name="description" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="id"></label>
+                            <input class="form-control" id="id" name="id" type="hidden" value=""/>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!--                <button type="submit" class="btn btn-primary">Save</button>-->
+                        <input class="btn btn-primary" type="submit" value="Save"/>
+
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-form-label" for="id"></label>
-                    <input class="form-control" id="id" name="id" type="hidden" value=""/>
-                </div>
-
             </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--                <button type="submit" class="btn btn-primary">Save</button>-->
-                <input class="btn btn-primary" type="submit" value="Save"/>
-
-            </div>
-        </div>
-         </div>
-    </form>
+        </form>
+    </div>
 </div>
-</div>
-
-
-
 
 
 </body>
