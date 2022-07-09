@@ -31,7 +31,6 @@ public class TaskController {
 
         // if task is empty, prompt error message to the user
         if(result.hasErrors()) {
-            model.addAttribute("task",task);
             System.out.println("Description size is less than 2!");
             return redirectTaskPage;
         } else {
