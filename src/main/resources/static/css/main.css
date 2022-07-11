@@ -12,13 +12,19 @@
 /*    background-color: black;*/
 /*}*/
 
+/*
 
-body {
+    when button is clicked
+    set the body class to dark-mode
+    set the color of tr to white
+    set the btn class to btn-light
+    set the <i> within the button to text-black
+
+ */
+
+.dark-mode {
     background-color: black;
-}
+    color: white;
 
-h2 {
-    color: red;
 }
-
 

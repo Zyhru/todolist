@@ -1,7 +1,10 @@
 
-let x;
+
+
 
 $(document).ready(function() {
+
+
 
 
     // opening modal and setting previous information inside inputs
@@ -31,63 +34,55 @@ $(document).ready(function() {
 
         const taskInput = document.getElementById("taskDesc");
 
-        if(taskInput.value.length === 0) {
+        if(taskInput.value.length <= 1) {
             alert("Description cannot be empty!");
         }
 
 
     });
 
-
-    // when user click on the add button and the input is empty then provide a message
-    // $('##addTask').validate({
-    //
-    //     rules: {
-    //         task: "required",
-    //         description: {
-    //             required: true,
-    //             minlength: 1
-    //         },
-    //         message: {
-    //             task: "Task must not be empty!"
-    //         }
-    //
-    //     }
-    //
-    //     }
-    // )
+    const body = document.getElementById("bodyId");
+    const table = document.querySelector("table")
+    const moonBtn = document.getElementById('darkModeBtn');
+    const moonIcon = moonBtn.children[0];
 
 
+    const darkMode = () => {
+        body.className = "dark-mode";
+        table.style.setProperty("color","white");
+        moonBtn.className = "btn btn-light";
+        moonIcon.className = "bi bi-moon text-black";
+        localStorage.setItem('dark', "true");
 
+    }
 
+    const lightMode = () => {
+        body.className = "";
+        table.style.setProperty("color","black");
+        moonBtn.className = "btn btn-dark";
+        moonIcon.className = "bi bi-moon text-white";
+        localStorage.setItem('dark', "false");
 
+    }
 
-    // x = 0;
-    // // when user clicks on the 'Finished Button'
-    // $('.table .btn-success').on('click',function(event) {
-    //     event.preventDefault();
-    //     const status = document.getElementById("statusId");
-    //
-    //     if(x === 0) {
-    //         status.innerText = "Complete";
-    //         x = 1;
-    //     } else {
-    //         status.innerText = "In progress";
-    //         x = 0;
-    //     }
-    //
-    //
-    //     console.log(x);
-    //
-    // });
+    if(localStorage.getItem("dark") === "true") {
+        darkMode();
+    }
+
+    // Using localStorage to keep darkMode on when an item is added or when page is refreshed
+    $('#darkModeBtn').on('click',function () {
+
+        console.log("Dark mode button has been clicked");
+
+        if(localStorage.getItem('dark') === "false") {
+            darkMode();
+        } else {
+            lightMode();
+        }
 
 
 
-
-
-
-
-
+    });
 
 
 
