@@ -1,0 +1,24 @@
+
+
+
+
+/*:root {*/
+/*    --bodyColor: black;*/
+/*    --tableColor: black;*/
+/*    --headerColor: black;*/
+/*}*/
+
+/*.dark-mode {*/
+/*    background-color: black;*/
+/*}*/
+
+
+body {
+    background-color: black;
+}
+
+h2 {
+    color: red;
+}
+
+
