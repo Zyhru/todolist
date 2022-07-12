@@ -90,6 +90,7 @@ public class TaskController {
     @PostMapping("/update")
     public String update(Task task) {
 
+        System.out.println("User has updated: /n" + task.getId() + "\nWith a description of " + task.getDescription());
         taskService.update(task);
         return redirectTaskPage;
 
