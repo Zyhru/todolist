@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,18 +28,28 @@ public class TaskController {
 
     // adds a task to our database by performing a POST request, then it redirects us to all of our tasks (localhost:8080/tasks/getAll
     @PostMapping("/addTask")
-    public String createTask(@ModelAttribute("task") @Valid Task task, BindingResult result, Model model) {
+    public String createTask(@Valid Task task, BindingResult result, Model model) {
 
         // if task is empty, prompt error message to the user
+//        if(error != null && error.getErrorCount() > 0) {
+//            System.out.println("Description size is less than 2!");
+//            return redirectTaskPage;
+//        } else {
+//            System.out.println("Adding task: " + task.toString());
+//            taskService.createTask(task);
+//            return redirectTaskPage;
+//        }
+//
         if(result.hasErrors()) {
-            System.out.println("Description size is less than 2!");
             return redirectTaskPage;
-        } else {
-            System.out.println("Adding task: " + task.toString());
-            taskService.createTask(task);
         }
 
+
+        taskService.createTask(task);
+
         return redirectTaskPage;
+
+
     }
 
 

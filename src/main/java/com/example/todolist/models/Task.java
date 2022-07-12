@@ -2,8 +2,9 @@ package com.example.todolist.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -13,10 +14,10 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer Id;
     @NotEmpty(message="Description cannot be empty!")
-    @Size(min = 2, max = 30)
+    @NotNull(message = "Description cannot be null")
+    @Size(min=3, max = 50)
     private String description;
     private String status = "In progress";
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate timeCreated = LocalDate.now();
 

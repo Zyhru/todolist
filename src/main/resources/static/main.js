@@ -4,9 +4,6 @@
 
 $(document).ready(function() {
 
-
-
-
     // opening modal and setting previous information inside inputs
     $('.table .btn-warning').on('click', function (event) {
         event.preventDefault();
@@ -26,7 +23,7 @@ $(document).ready(function() {
 
 
    // const emptyInput = false;
-    $('#addBtn').on('click', function(event) {
+    $('#addBtn').on('click', function() {
 
 
        // on button click , console.log when input field of id (inputTaskName) is empty
@@ -34,6 +31,7 @@ $(document).ready(function() {
 
         const taskInput = document.getElementById("taskDesc");
 
+        // alert the user when the task description length is less than or equal to 1
         if(taskInput.value.length <= 1) {
             alert("Description cannot be empty!");
         }
@@ -45,6 +43,7 @@ $(document).ready(function() {
     const table = document.querySelector("table")
     const moonBtn = document.getElementById('darkModeBtn');
     const moonIcon = moonBtn.children[0];
+    const footer = document.querySelectorAll('a');
 
 
     const darkMode = () => {
@@ -53,6 +52,10 @@ $(document).ready(function() {
         moonBtn.className = "btn btn-light";
         moonIcon.className = "bi bi-moon text-black";
         localStorage.setItem('dark', "true");
+
+        footer.forEach((a) => {
+            a.style.setProperty('--social-link-color', 'white');
+        });
 
     }
 
@@ -63,6 +66,12 @@ $(document).ready(function() {
         moonIcon.className = "bi bi-moon text-white";
         localStorage.setItem('dark', "false");
 
+
+        footer.forEach((a) => {
+            a.style.setProperty('--social-link-color', 'black');
+        });
+
+
     }
 
     if(localStorage.getItem("dark") === "true") {
@@ -71,6 +80,10 @@ $(document).ready(function() {
 
     // Using localStorage to keep darkMode on when an item is added or when page is refreshed
     $('#darkModeBtn').on('click',function () {
+
+
+
+
 
         console.log("Dark mode button has been clicked");
 
