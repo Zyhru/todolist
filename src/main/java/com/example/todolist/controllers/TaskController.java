@@ -30,16 +30,7 @@ public class TaskController {
     @PostMapping("/addTask")
     public String createTask(@Valid Task task, BindingResult result, Model model) {
 
-        // if task is empty, prompt error message to the user
-//        if(error != null && error.getErrorCount() > 0) {
-//            System.out.println("Description size is less than 2!");
-//            return redirectTaskPage;
-//        } else {
-//            System.out.println("Adding task: " + task.toString());
-//            taskService.createTask(task);
-//            return redirectTaskPage;
-//        }
-//
+
         if(result.hasErrors()) {
             return redirectTaskPage;
         }
@@ -115,19 +106,17 @@ public class TaskController {
 
         taskService.update(task);
 
-
         return redirectTaskPage;
 
     }
 
+    @GetMapping("/sort")
+    public String sortTasks() {
+
+        taskService.sortTasks();
+        return redirectTaskPage;
 
 
-
-
-
-
-
-
-
+    }
 
 }

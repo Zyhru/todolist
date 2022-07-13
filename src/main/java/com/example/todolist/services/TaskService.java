@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -16,6 +15,15 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    private SortState sortState = SortState.DEFAUlT;
+
+    public enum SortState {
+        DEFAUlT,
+        DESCRIPTION,
+        TIME_CREATED,
+        STATUS;
+    }
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -29,26 +37,30 @@ public class TaskService {
 
 
     public List<Task> getAllTask() {
-        return (List<Task>) taskRepository.findAll();
+
+        List<Task> taskList = (List<Task>) taskRepository.findAll();
+        List<Task> unSortedList = null;
+
+        switch(sortState) {
+
+            case DESCRIPTION:
+                taskList.sort(Comparator.comparing(Task::getDescription));
+                break;
+            case STATUS:
+                taskList.sort(Comparator.comparing(Task::getStatus));
+                break;
+            case TIME_CREATED:
+                taskList.sort(Comparator.comparing(Task::getTimeCreated));
+                break;
+            case DEFAUlT:
+                unSortedList = taskList;
+                break;
+        }
+
+        return taskList;
+
     }
 
-
-
-//    public Task getTaskById(Integer id) {
-//        Optional<Task> optionalTask = taskRepository.findById(id);
-//        Task task = null;
-//
-//        if(optionalTask.isPresent()) {
-//            task = optionalTask.get();
-//        } else {
-//            throw new RuntimeException("Task not found for id: " + id);
-//        }
-//
-//
-//
-//        return task;
-//
-//    }
 
     public Optional<Task> getTaskById(Integer id) {
         return taskRepository.findById(id);
@@ -59,15 +71,26 @@ public class TaskService {
 
         taskRepository.deleteById(id);
 
-        // Delete the task
-        // Decrement the task by 1 and set it
-
 
     }
 
     public void update(Task task) {
 
         taskRepository.save(task);
+
+    }
+
+
+    // clicking on sort button will sort button by description
+
+    public void sortTasks() {
+
+
+        // Later I will implement the other sort options.
+
+        sortState = SortState.DESCRIPTION;
+
+        System.out.println("Sort State: " + sortState);
 
     }
 
